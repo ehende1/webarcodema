@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image.prod.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image-aframe.prod.js"></script>
+    <style>
+      #target-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("https://cdn.glitch.global/6aa166e0-47cd-4021-95f9-163d12019b0c/marcador-tapabocas.png?v=1748808535895");
+        background-size: contain;
+        background-repeat: no-repeat;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      #text-box {
+        position: absolute;
+        bottom: 20px;
+        left: 49%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 1px 2px;
+        font-size: 18px;
+        border-radius: 8px;
+        max-width: 100%;
+        text-align: center;
+      }
+      #form-button {
+        display: none;
+        position: absolute;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 20px;
+        background-color: #40faf5;
+        color: black;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="target-overlay"></div>
+    <a-scene
+      mindar-image="imageTargetSrc:https://cdn.glitch.global/6aa166e0-47cd-4021-95f9-163d12019b0c/marcador-tapabocas.mind?v=1748808518135"
+      color-space="sRGB"
+      renderer="colorManagement: true, physicallyCorrectLights"
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false"
+    >
+      <a-assets>
+        <img
+          id="card"
+          src="https://cdn.glitch.global/6aa166e0-47cd-4021-95f9-163d12019b0c/marcador-tapabocas.png?v=1748808535895"
+        />
+      </a-assets>
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+      <a-entity mindar-image-target="targetIndex: 0" id="ar-target">
+        <a-gltf-model
+          rotation="0 150 0"
+          position="0 -0.5 0"
+          scale="5 5 5"
+          src="https://cdn.glitch.global/6aa166e0-47cd-4021-95f9-163d12019b0c/Jupiter.glb?v=1742313060687"
+        >
+        </a-gltf-model>
+        <a-plane
+          position="0 0.5 0"
+          width="2"
+          height="0.3"
+          color="#40faf5"
+          text="value:“Ju*piter, el gigante guardia*n que con su fuerza desvi*a peligros del camino de la Tierra.” 
+                ; color: black; align: center"
+          class="clickable-button"
+          event-set__click="scale: 1.2 1.2 1; animation__scale: property: scale; to: 1 1 1; dur: 200"
+        >
+        </a-plane>
+      </a-entity>
+    </a-scene>
+    <div id="text-box">
+      Encuentra la imagen traslucida en tu entorno y escaneala en el centro de
+      la pantalla para observar una sorpresa y desbloquear el formulario.
+    </div>
+    <button id="form-button" onclick="openForm()">Abrir formulario</button>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const arTarget = document.getElementById("ar-target");
+        if (arTarget) {
+          arTarget.addEventListener("targetFound", () => {
+            document.getElementById("form-button").style.display = "block";
+          });
+        }
+      });
+      function openForm() {
+        window.location.href = "https://forms.gle/kwvdFDMV1gQsVU6aA";
+      }
+    </script>
+  </body>
+</html>
